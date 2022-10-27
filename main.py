@@ -6,8 +6,8 @@ from ipwhois.exceptions import HTTPLookupError, IPDefinedError
 import pycountry
 
 from ip import lookup_ips
-from data import g
-from location import tally_countries
+from data import g, file_to_analyze
+from location import tally_countries, plot_postal_codes
 
 
 
@@ -27,13 +27,21 @@ def iterate_input(input_file, work_todo, starting_no=0):
 if __name__ == "__main__":
     g.load_data()
 
-    if sys.argv[1] == 'lookup':
-        iterate_input('ips', lookup_ips)
+    try:
+        if sys.argv[1] == 'lookup':
+            iterate_input(file_to_analyze, lookup_ips)
+            g.save_data()
+        if sys.argv[1] == 'tally':
+            iterate_input(file_to_analyze, tally_countries)
+            g.save_data()
+            print(g.country_dict)
+            print(g.postal_code)
+        if sys.argv[1] == 'plot':
+            plot_postal_codes()
+            print(g.postal_code)
+        if sys.argv[1] == 'print':
+            print(len(g.bad_ips), g.bad_ips)
+            print(g.ip_objs.keys())
+    except BaseException as e:
         g.save_data()
-    if sys.argv[1] == 'tally':
-        iterate_input('ips_working', tally_countries)
-        print(g.country_dict)
-        print(g.postal_code)
-    if sys.argv[1] == 'print':
-        print(len(g.bad_ips), g.bad_ips)
-        print(g.ip_objs.keys())
+        print(e.output)
