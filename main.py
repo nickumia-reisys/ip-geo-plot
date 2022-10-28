@@ -7,7 +7,7 @@ import pycountry
 
 from ip import lookup_ips
 from data import g, file_to_analyze
-from location import tally_countries, plot_postal_codes
+from location import tally_countries, plot_location
 
 
 
@@ -36,10 +36,16 @@ if __name__ == "__main__":
             g.save_data()
             print(g.country_dict)
             print(g.postal_code)
+            print(g.states)
         if sys.argv[1] == 'plot':
-            plot_postal_codes()
-            print(g.postal_code)
-        if sys.argv[1] == 'print':
+            if len(sys.argv) == 3:
+                if sys.argv[2] == 'zip':
+                    plot_location(map_type='zip')
+                    print(g.postal_code)
+            else:
+                plot_location(map_type='state')
+                print(g.states)
+        else:
             print(len(g.bad_ips), g.bad_ips)
             print(g.ip_objs.keys())
     except BaseException as e:

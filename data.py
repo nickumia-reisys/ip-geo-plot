@@ -13,6 +13,7 @@ class Data():
         self.ip_objs = {}
         self.country_dict = {}
         self.postal_code = {}
+        self.states = {}
 
     def save_data(self):
         with open(save_file, 'wb') as f:
@@ -21,7 +22,7 @@ class Data():
     def load_data(self):
         try:
             with open(save_file, 'rb') as f:
-                self.bad_ips, self.ip_objs, self.country_dict, self.postal_code = pickle.load(f)
+                self.bad_ips, self.ip_objs, self.country_dict, self.postal_code, self.states = pickle.load(f)
         except (ValueError, FileNotFoundError):
             return [], {}, {}, {}
 
@@ -29,6 +30,6 @@ g = Data()
 
 if __name__ == "__main__":
     # Inspect the order of variables on save/load
-    # g.load_data()
+    g.load_data()
     print(list(vars(g).keys()))
-    print(list(vars(g).values()))
+    # print(list(vars(g).values()))

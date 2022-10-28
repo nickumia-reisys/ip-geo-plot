@@ -131,3 +131,10 @@ dmypy.json
 ips
 *.html
 *.pkl
+*.cpg
+*.dbf
+*.prj
+*.shp
+*.shp.ea.iso.xml
+*.shp.iso.xml
+*.shx
